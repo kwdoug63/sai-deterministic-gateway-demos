@@ -24,3 +24,29 @@ This repository contains abstracted structural demonstrations of the SAI gateway
 To see the deterministic circuit breaker in action:
 ```bash
 python demos/financial_circuit_breaker.py
+
+---
+
+## 📐 Architectural Mechanics: How It Works (FIG. 1)
+
+```mermaid
+graph TD
+    classDef agent fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#fff;
+    classDef gateway fill:#2b6cb0,stroke:#63b3ed,stroke-width:2px,color:#fff;
+    classDef live fill:#2f855a,stroke:#68d391,stroke-width:2px,color:#fff;
+    classDef blocked fill:#c53030,stroke:#fc8181,stroke-width:2px,color:#fff;
+    classDef log fill:#4a5568,stroke:#a0aec0,stroke-width:2px,color:#fff;
+
+    A[Probabilistic Agent 101]:::agent -->|Intended Action Captured| B[API Interceptor 102]:::gateway
+    
+    subgraph Deterministic Gateway boundary
+        B --> C{Deterministic Circuit Breaker 103}:::gateway
+        C -.-> D[Diagnostic Engine<br/>Rule Engine<br/>Immutable Guardrails]:::gateway
+    end
+
+    C -->|Authorized Action / 100% Validation| E[Live Execution Environment 104]:::live
+    
+    C -->|Violation / Blocked Intent| F[Immutable Audit Log 105]:::log
+    
+    F -->|Pathology Generated| G((Rehabilitation Loop)):::blocked
+    G -.->|Forces Deterministic Prompt-Correction| A
