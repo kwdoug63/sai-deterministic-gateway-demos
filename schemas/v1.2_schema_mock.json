@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SAI Canonical Ingestion Envelope (v1.2 Mock)",
+  "description": "Strict payload contract required by the SAI downstream gateway. Enforces zero-trust fail-closed evaluation.",
+  "type": "object",
+  "required": [
+    "target_operation",
+    "structured_payload_body",
+    "required_invariants",
+    "policy_anchor",
+    "authority_context",
+    "payload_hash"
+  ],
+  "properties": {
+    "target_operation": {
+      "type": "string",
+      "description": "The specific downstream API being invoked by the probabilistic agent."
+    },
+    "structured_payload_body": {
+      "type": "object",
+      "description": "The exact data package or parameters intended for the API."
+    },
+    "required_invariants": {
+      "type": "object",
+      "description": "Static, bounded mathematical or logical predicates the payload must satisfy."
+    },
+    "policy_anchor": {
+      "type": "string",
+      "description": "The overarching enterprise governance rule reference (e.g., TREASURY_TIER_1)."
+    },
+    "authority_context": {
+      "type": "string",
+      "description": "A composite of the requesting actor and the session identifier."
+    },
+    "payload_hash": {
+      "type": "string",
+      "description": "Cryptographic hash generated pre-execution to guarantee intent integrity in transit."
+    }
+  }
+}
